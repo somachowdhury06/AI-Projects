@@ -31,6 +31,7 @@
                 {% endfor %}
             </select>
         </div>
+        <input type="hidden" id="establishedAuthor" name="establishedAuthor" value="false">
 
         <script>
         function checkAuthor() {
@@ -43,11 +44,17 @@
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.getElementById('dropdown-container');
+                const establishedInput = document.getElementById('establishedAuthor');
+                // If the author is not established and the field is not empty, show suggestions
                 if (!data.established && author.trim() !== '') {
                     dropdown.style.display = 'block';
+                    establishedInput.value = 'false'; // not established
                 } else {
                     dropdown.style.display = 'none';
+                    establishedInput.value = 'true'; // established
                 }
+            }).catch(err => {
+                console.error('Error checking author:', err);
             });
         }
         </script>
