@@ -8,3 +8,4 @@ class Config:
     # or for the current session:
     #   $env:OPENAI_TOKEN = "your_openai_key"
     OPENAI_TOKEN = os.environ.get('OPENAI_TOKEN') or ''  # fallback (remove this and set env var in production)
+ 
