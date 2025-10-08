@@ -65,7 +65,7 @@
     {% if story %}
         <div class="story">
             <h2>Generated Story</h2>
-            <p>{{ story }}</p>
+            <p>{{ story | safe }}</p>
         </div>
     {% endif %}
 </div>

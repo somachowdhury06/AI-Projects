@@ -104,12 +104,12 @@ def index():
             selected_author = request.form.get('selected_author')
             if selected_author:
                 story = generate_story(subject, selected_author)
-                storyTitle = f"Story about {subject} in the style of {selected_author} \n\n {story}"
+                storyTitle = f"Story about {subject} <br/> In the style of {selected_author} </br> {story}"
             else:
                 story = generate_story(subject, author)
-                storyTitle = f"Story about {subject} in the style of {author} \n\n {story}"
+                storyTitle = f"Story about {subject} <br/> In the style of {author} <br/> {story}"
     # storyTitle may be defined only when POST; pass story (or None) into template
-    return render_template('index.html', story=story, authors=KNOWN_AUTHORS, selected_author=selected_author)
+    return render_template('index.html', story=storyTitle, authors=KNOWN_AUTHORS, selected_author=selected_author)
 
 def generate_story(subject, author):
     prompt = (
