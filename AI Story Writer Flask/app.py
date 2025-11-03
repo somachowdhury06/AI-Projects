@@ -74,10 +74,12 @@ def check_author():
     return jsonify({'established': result})
 
 def is_established_author(author):
+    knownAuthor = False
+    fetchedKnownAuthor = False
     # First, check against the local list
     established_authors = [a.lower() for a in KNOWN_AUTHORS]
     if author.lower() in established_authors:
-        return True
+        knownAuthor = True
 
     # Use OpenAI to check if the author is established
     prompt = f"Is '{author}' a published or well-known author? Reply with 'yes' or 'no'."
@@ -87,10 +89,12 @@ def is_established_author(author):
             {"role": "user", "content": prompt}
         ]
         answer = call_openai_chat(messages, model="gpt-3.5-turbo", temperature=0.0, max_tokens=10)
-        return answer.strip().lower().startswith('yes')
+        fetchedKnownAuthor = answer.strip().lower().startswith('yes')
     except Exception as e:
         print(f"OpenAI error: {e}")
-        return False
+        fetchedKnownAuthor = False
+
+    return knownAuthor or fetchedKnownAuthor
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
